@@ -1,0 +1,281 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* -------------------------- */
+body{
+    width: 1024px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;
+    position: relative;
+}
+/* head */
+.header{
+    background-image: url(img/hero.png);
+    background-size: cover;
+    height: 380px;
+    text-align: center;
+    padding-top: 89px;
+    box-sizing: border-box;
+}
+h1{
+    font-size: 40px;
+    font-variant: 4px;
+    color: white;
+    margin-bottom: 96px;
+}
+.header select{
+    width: 452px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 21px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 3px solid white;
+}
+/* 熱門行政區 */
+.hot{
+    width: 800px;
+    height: 112px;
+    background-color: white;
+    padding: 20px 26px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin: auto;
+    box-shadow: 0 0 3px #aaa;
+    position: relative;
+    bottom: 28px;
+}
+.hot h2{
+    font-size: 18px;
+    font-weight: bold;
+}
+.HOTstc{
+    padding: 14px 40px;
+    display: flex;
+    justify-content: center;
+}
+/* 熱門行政區-每個區 */
+.box{
+    display: inline-block;
+    width: 130px;
+    height: 42px;
+    padding: 11px 0;
+    box-sizing: border-box;
+    margin: 0 11px;
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    background-color: aliceblue;
+    border-radius: 10px;
+}
+.box-1{background-color: #8A82CC;}
+.box-2{background-color:#FFA782;}
+.box-3{background-color:#F5D005;}
+.box-4{background-color:#559AC8;}
+.divide{
+    width: 900px;
+    margin: auto;
+    margin-bottom: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dash{
+    width: 438px;
+    height: 0px;
+    border: #559AC8 1px dashed;
+}
+.icondown{
+    width: 22px;
+    height: 22px;
+    margin: 0 5px;
+    padding: 0;
+    border: #559AC8 3px solid;
+    border-radius: 50%;
+    position: relative;
+}
+.icondown img{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    filter: drop-shadow(0 22px#559AC8);
+    transform: translateY(-22px);
+    overflow: hide;
+}
+/* body */
+.strictTitle{
+    font-size: 39px;
+    text-align: center;
+    color: #8A82CC;
+}
+.content{
+    display: flex;
+    flex-wrap:wrap;
+    width: 100%;
+    padding: 24px 32px 0px;
+    box-sizing: border-box;
+    position: relative;
+}
+.content .nospot{
+    font-size: 24px;
+    text-align: center;
+}
+/* body--單一個資料的BOX */
+.spots{
+    width: 464px;
+    margin: 18px 8px;
+    position: relative;
+    box-shadow: #4A4A4A 0 0 4px;
+}
+.img{
+    height: 155px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+}
+.wrap{
+    width: 100%;
+    height: 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    box-sizing: border-box;
+    background-color: rgba(216, 216, 216, 0)
+}
+.wrap:hover{
+    background-color: rgba(156, 156, 156, 0.5)
+}
+.spotName{
+    font-size: 24px;
+    color: white;
+}
+.strict{
+    font-size: 18px;
+    color: white;
+}
+.info{
+    padding:20px 24px 10px;
+    box-sizing: border-box;
+}
+.info div{
+    font-size: 16px;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+.info p{
+    display: inline-block;
+    margin-left: 7px;
+    line-height: 1.2;
+}
+.tel a{
+    text-decoration: none;
+}
+.corner{
+    position: absolute;
+    margin-bottom: 0px;
+    bottom: 0px;
+    right: 24px;
+}
+/* 轉跳頁面 */
+.page{
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    margin:30px 0 41px;
+}
+.page a{
+    text-decoration: none;
+    color:#4A4A4A;
+}
+.pageNum{
+    display: flex;
+    justify-content: center;
+}
+.prev ,.next{
+    margin:0 10px
+}
+.pageNum li{
+    margin: 0 10px;
+}
+/* Go Top */
+.gotop{
+    position:fixed;
+    bottom:50px;
+    right:100px;
+    opacity: 0;
+    transform:translateX(10px);
+    transition:transform 1s ,opacity 1s ,box-shadow 0.3s;
+}
+.gotop:hover{
+    cursor: pointer;
+    box-shadow: 0 0 5px #559AC8;
+}
+/* foot */
+.footer{
+    height: 90px;
+    background-color: #559AC8;
+    text-align: center;
+    font-size: 14px;
+    padding: 24px 0;
+    box-sizing: border-box;
+}
+.footer h4{
+    margin-bottom: 15px;
+    color: white;
+}
+.footer p{
+    color: #FFD366;
+}
