@@ -55,7 +55,7 @@ body{
 }
 /* head */
 .header{
-    background-image: url(img/hero.png);
+    background-image: url(img/Hero.png);
     background-size: cover;
     height: 380px;
     text-align: center;
