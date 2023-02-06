@@ -1,4 +1,4 @@
-var data=[{
+const data=[{
 Ticketinfo: "免費參觀",Zone: "三民區",Px: "120.28357", Py: "22.64668",Add: "高雄市三民區同盟三路與十全三路交叉處",Gov: "397000000A",Class2: null,Class1: "2",Website: "",Opentime: "全天候開放",Description: "串起高雄城市生態綠廊的中都愛河濕地公園座落於愛河南側的十全與九如路之間，全長約2.5公里，佔地達七千餘平方公尺。為了打造與市民生活融合的「水岸花香的永續生態城市」，愛河濕地公園以生態工法構築邊坡，重現早期溼地豐富生態棲息環境。園區設置原木建築為遊客解說中心，另有木造涼亭、吊橋、潮汐親水平台以及漂流木為設計主軸的燈具座椅等設施，質樸中深具原野氣息，而仿自然的複層林相植栽也使市區重現豐富林相。悠遊於綠油油曲折玲瓏的河岸可見各種水鳥飛翔駐留、紅樹林和濕地更使愛河重現盎然生機。由於中都濕地公園打造出兼具自然生態、教育解說及民眾休憩等眾多功能，又完整呈現愛河沿岸多樣性的風貌，2012年榮獲「全球卓越建設獎」殊榮，也因此有高雄都會桃花源的美稱。",Remarks: "",Parkinginfo_py: "0",Parkinginfo_px: "0",Name: "中都愛河濕地公園",Level: null,Picture1: "https://raw.githubusercontent.com/hexschool/KCGTravel/master/image/%E4%B8%89%E6%B0%91%E5%8D%80/%E4%B8%AD%E9%83%BD%E6%BF%95%E5%9C%B0%E5%85%AC%E5%9C%9207.jpg",Toldescribe: "串起高雄城市生態綠廊的中都愛河濕地公園座落於愛河南側的十全與九如路之間，全長約2.5公里，佔地達七千餘平方公尺。為了打造與市民生活融合的「水岸花香的永續生態城市」，愛河濕地公園以生態工法構築邊坡，重現早期溼地豐富生態棲息環境。園區設置原木建築為遊客解說中心，另有木造涼亭、吊橋、潮汐親水平台以及漂流木為設計主軸的燈具座椅等設施，質樸中深具原野氣息，而仿自然的複層林相植栽也使市區重現豐富林相。悠遊於綠油油曲折玲瓏的河岸可見各種水鳥飛翔駐留、紅樹林和濕地更使愛河重現盎然生機。由於中都濕地公園打造出兼具自然生態、教育解說及民眾休憩等眾多功能，又完整呈現愛河沿岸多樣性的風貌，2012年榮獲「全球卓越建設獎」殊榮，也因此有高雄都會桃花源的美稱。",Changetime: "2015-06-02T13:59:00",Tel: "886-7-7995678",Picdescribe1: "中都愛河濕地公園",Travellinginfo: "", _id: 2,Id: "C1_397000000A_000010",}, {Ticketinfo: "免費參觀",Zone: "三民區",Px: "120.32707",Py: "22.6727",Add: "高雄市三民區鼎金後路461巷",Gov: "397000000A",Class2: null,
     Class1: "2",
     Website: "",
@@ -1422,14 +1422,14 @@ Ticketinfo: "免費參觀",Zone: "三民區",Px: "120.28357", Py: "22.64668",Add
     _id: 123,
     Id: "C1_397000000A_000190",
     }]
-var Len =data.length;
-var Select=document.getElementById('choose');
-var UL=document.querySelector('.content');
-var Page=document.querySelector('.page')
-var strictH3=document.querySelector('.strictTitle');
-var hotBox=document.querySelector('.HOTstc')
-var btn=document.querySelector('.gotop')
-
+const Len =data.length;
+const Select=document.getElementById('choose');
+const UL=document.querySelector('.content');
+const Page=document.querySelector('.page')
+const districtH3=document.querySelector('.districtTitle');
+const hotBox=document.querySelector('.hotDsrct')
+const btn=document.querySelector('.goTop')
+let str=''
 // 事件
 updateList();
 Select.addEventListener('change',changeSelect);
@@ -1437,38 +1437,65 @@ hotBox.addEventListener('click',callHotspot);
 window.addEventListener('scroll',btnShow);
 btn.addEventListener('click',goTop);
 
+function renderList(item,index){
+    str+=`<li class="spots">
+                    <div class="img" style="background-image:url(${item.Picture1})">
+                        <div class="wrap">
+                            <h5 class="spotName">${item.Name}</h5>
+                            <span class="strict">${item.Zone}</span>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div>
+                            <img src="img/icons_clock.png" alt="">
+                            <p class="time">${item.Opentime}</p>
+                        </div>
+                        <div>
+                            <img src="img/icons_pin.png" alt="">
+                            <p class="add">${item.Add}</p>
+                        </div>
+                        <div>
+                            <img src="img/icons_phone.png" alt="">
+                            <p class="tel">${item.Tel}</p>
+                        </div>
+                        <div class="corner">
+                            <img src="img/icons_tag.png" alt="">
+                            <p class="ticket">${item.Ticketinfo}</p>
+                        </div>
+                    </div>
+                </li>`
+}
 function updateList(){
-    var str=''
-
-    for(var i=0;i<Len;i++){
-         str+='<li class="spots"><div class="img" style="background-image:url('+data[i].Picture1+')"><div class="wrap"><h5 class="spotName">'+data[i].Name+'</h5><span class="strict">'+data[i].Zone+'</span></div></div><div class="info"><div><img src="img/icons_clock.png" alt=""><p class="time">'+data[i].Opentime+'</p></div><div><img src="img/icons_pin.png" alt=""><p class="add">'+data[i].Add+'</p></div><div><img src="img/icons_phone.png" alt=""><p class="tel">'+data[i].Tel+'</p></div><div class="corner"><img src="img/icons_tag.png" alt=""><p class="ticket">'+data[i].Ticketinfo+'</p></div></div></li>'
-    }
+    data.forEach(function(item,index){
+        renderList(item,index)
+    })
     UL.innerHTML=str;
 };
 function callHotspot(e){
-    var dataZone =e.target.dataset.zone;
-    var str='';
-    var nodeName=e.target.nodeName;
+    let dataZone =e.target.dataset.zone;
+    let str='';
+    let nodeName=e.target.nodeName;
     if(nodeName=='A'){
-        strictH3.innerHTML=dataZone;
+        districtH3.innerHTML=dataZone;
         Select.value=dataZone;
-        for(var i=0;i<Len;i++){
-            if(dataZone==data[i].Zone){
-                str+='<li class="spots"><div class="img" style="background-image:url('+data[i].Picture1+')"><div class="wrap"><h5 class="spotName">'+data[i].Name+'</h5><span class="strict">'+data[i].Zone+'</span></div></div><div class="info"><div><img src="img/icons_clock.png" alt=""><p class="time">'+data[i].Opentime+'</p></div><div><img src="img/icons_pin.png" alt=""><p class="add">'+data[i].Add+'</p></div><div><img src="img/icons_phone.png" alt=""><p class="tel">'+data[i].Tel+'</p></div><div class="corner"><img src="img/icons_tag.png" alt=""><p class="ticket">'+data[i].Ticketinfo+'</p></div></div></li>'
+        data.forEach(function(item,index){
+            if(dataZone==item.Zone){
+                console.log(item)
+                renderList(item,index)
             }
-    }
+        })
     UL.innerHTML=str
     }
 }
 function changeSelect (e){
-    var slcValue=e.target.value;
-    var str ='';
-    strictH3.innerHTML=slcValue;
-    for(var i=0;i<Len;i++){
-            if(slcValue==data[i].Zone){
-                str+='<li class="spots"><div class="img" style="background-image:url('+data[i].Picture1+')"><div class="wrap"><h5 class="spotName">'+data[i].Name+'</h5><span class="strict">'+data[i].Zone+'</span></div></div><div class="info"><div><img src="img/icons_clock.png" alt=""><p class="time">'+data[i].Opentime+'</p></div><div><img src="img/icons_pin.png" alt=""><p class="add">'+data[i].Add+'</p></div><div><img src="img/icons_phone.png" alt=""><p class="tel">'+data[i].Tel+'</p></div><div class="corner"><img src="img/icons_tag.png" alt=""><p class="ticket">'+data[i].Ticketinfo+'</p></div></div></li>'
-            }
-    }
+    let slcValue=e.target.value;
+    let str ='';
+    districtH3.innerHTML=slcValue;
+    data.forEach(function(item,index){
+        if(slcValue==item.Zone){
+            renderList(item,index)
+        }
+    })
     UL.innerHTML=str
 }
 function btnShow(){

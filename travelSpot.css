@@ -95,7 +95,7 @@ h1{
     font-size: 18px;
     font-weight: bold;
 }
-.HOTstc{
+.hotDsrct{
     padding: 14px 40px;
     display: flex;
     justify-content: center;
@@ -153,7 +153,7 @@ h1{
     overflow: hide;
 }
 /* body */
-.strictTitle{
+.districtTitle{
     font-size: 39px;
     text-align: center;
     color: #8A82CC;
@@ -201,7 +201,7 @@ h1{
     font-size: 24px;
     color: white;
 }
-.strict{
+.district{
     font-size: 18px;
     color: white;
 }
@@ -251,7 +251,7 @@ h1{
     margin: 0 10px;
 }
 /* Go Top */
-.gotop{
+.goTop{
     position:fixed;
     bottom:50px;
     right:100px;
@@ -259,7 +259,7 @@ h1{
     transform:translateX(10px);
     transition:transform 1s ,opacity 1s ,box-shadow 0.3s;
 }
-.gotop:hover{
+.goTop:hover{
     cursor: pointer;
     box-shadow: 0 0 5px #559AC8;
 }
