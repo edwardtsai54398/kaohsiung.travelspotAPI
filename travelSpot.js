@@ -1442,7 +1442,7 @@ function renderList(item,index){
                     <div class="img" style="background-image:url(${item.Picture1})">
                         <div class="wrap">
                             <h5 class="spotName">${item.Name}</h5>
-                            <span class="strict">${item.Zone}</span>
+                            <span class="district">${item.Zone}</span>
                         </div>
                     </div>
                     <div class="info">
@@ -1469,12 +1469,15 @@ function updateList(){
     data.forEach(function(item,index){
         renderList(item,index)
     })
+    console.log(str)
     UL.innerHTML=str;
 };
 function callHotspot(e){
     let dataZone =e.target.dataset.zone;
+    console.log(dataZone)
     let str='';
     let nodeName=e.target.nodeName;
+    console.log(nodeName)
     if(nodeName=='A'){
         districtH3.innerHTML=dataZone;
         Select.value=dataZone;
@@ -1484,6 +1487,7 @@ function callHotspot(e){
                 renderList(item,index)
             }
         })
+    console.log(str)
     UL.innerHTML=str
     }
 }
