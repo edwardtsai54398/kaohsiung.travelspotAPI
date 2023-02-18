@@ -223,12 +223,6 @@ h1{
 .tel a{
     text-decoration: none;
 }
-.corner{
-    position: absolute;
-    margin-bottom: 0px;
-    bottom: 0px;
-    right: 24px;
-}
 /* 轉跳頁面 */
 .page{
     display: flex;
