@@ -21,7 +21,6 @@ const Page=document.querySelector('.page')
 const districtH3=document.querySelector('.districtTitle');
 const hotBox=document.querySelector('.hotDsrct')
 const btn=document.querySelector('.goTop')
-let str=''
 let temporaryData=[]
 // 事件
 renderSelector()
@@ -32,6 +31,7 @@ window.addEventListener('scroll',btnShow);
 btn.addEventListener('click',goTop);
 
 function renderList(Arry){
+    let str=''
     Arry.forEach(function(data){
         if(data.Ticketinfo=='' || data.Ticketinfo=='免費參觀'){
             str+=`<li class="spots">
@@ -131,7 +131,6 @@ function renderSelector(){
 // }
 function changeSelect (e){
     let slcValue=e.target.value;
-    let str ='';
     districtH3.innerHTML=slcValue;
     let selectedDataArry=[]
     temporaryData.splice(0,1000)
