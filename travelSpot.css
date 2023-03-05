@@ -126,6 +126,7 @@ h1{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 }
 .dash{
     width: 438px;
@@ -150,7 +151,6 @@ h1{
     margin: auto;
     filter: drop-shadow(0 22px#559AC8);
     transform: translateY(-22px);
-    overflow: hide;
 }
 /* body */
 .districtTitle{
