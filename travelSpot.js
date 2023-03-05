@@ -21,12 +21,25 @@ const Page=document.querySelector('.page')
 const districtH3=document.querySelector('.districtTitle');
 const hotBox=document.querySelector('.hotDsrct')
 const btn=document.querySelector('.goTop')
-let temporaryData=[]
-// 事件
+//和轉跳頁面有關的變數
+let temporaryData=[]    /*callHotspot()和changeSelect()暫時push上來的資料，讓renderList()去渲染*/
+let currentPage =1
+let currentPageData=[]
+let perPage =16
+let showPage =10
+
+allData.forEach(function(data){
+    temporaryData.push(data)
+})
+
 renderSelector()
-renderList(allData);
+displayData()
+renderList(currentPageData);
+renderPageList(temporaryData)
+// 事件
 Select.addEventListener('change',changeSelect);
-// hotBox.addEventListener('click',callHotspot);
+hotBox.addEventListener('click',callHotspot);
+Page.addEventListener('click',changePage)
 window.addEventListener('scroll',btnShow);
 btn.addEventListener('click',goTop);
 
@@ -111,38 +124,204 @@ function renderSelector(){
     Select.innerHTML=str
 }
 
+// 點熱門行政區
+function callHotspot(e){
+    let dataZone =e.target.dataset.zone;
+    let nodeName=e.target.nodeName;
+    if(nodeName=='A'){
+        districtH3.innerHTML=dataZone;
+        Select.value=dataZone;
+        temporaryData.splice(0,1000)
+        allData.forEach(function(data){
+            if(dataZone==data.Zone){
+                temporaryData.push(data)
+            }
+        })  /*forEach迴圈將符合的行政區push到陣列temporaryData*/
+    currentPage =1
+    displayData()
+    renderPageList(temporaryData)
+    renderList(currentPageData)
+    }
+}
 
-// function callHotspot(e){
-//     let dataZone =e.target.dataset.zone;
-//     let temporaryData=[]
-//     let nodeName=e.target.nodeName;
-//     if(nodeName=='A'){
-//         districtH3.innerHTML=dataZone;
-//         Select.value=dataZone;
-//         data.forEach(function(data){
-//             if(dataZone==data.Zone){
-//                 console.log(data)
-//                 temporaryData.push(data)
-//             }
-//         })
-//     console.log(temporaryData)
-//     renderList(temporaryData)
-//     }
-// }
+// 變更下拉式選單的內容
 function changeSelect (e){
     let slcValue=e.target.value;
     districtH3.innerHTML=slcValue;
-    let selectedDataArry=[]
     temporaryData.splice(0,1000)
-    console.log(temporaryData)
     allData.forEach(function(data){
         if(slcValue==data.Zone){
             temporaryData.push(data)
         }
-    })
-    console.log(temporaryData)
-    renderList(temporaryData)
+    })  /*forEach迴圈將符合的行政區push到陣列temporaryData*/
+    if(slcValue=="全部景點"){
+        allData.forEach(function(data){
+            temporaryData.push(data)
+        })
+    }
+    currentPage =1
+    displayData()
+    renderPageList(temporaryData)//頁面每換一次資料，頁數也要跟著換
+    renderList(currentPageData)
 }
+
+function renderPageList(data){
+    let DataLen =data.length
+    let pageTotal =Math.ceil(DataLen/perPage)/*總頁數=(資料數/每頁筆數)無條件進位*/
+    let str=''
+    let pre='<li class="previous" data-page="pre">Previous</li>'
+    let nxt='<li class="next" data-page="nxt">Next</li>'
+    //總共有幾頁就渲染到網頁
+    if(pageTotal>showPage){     //總頁數超過10頁，就先呈現前10頁
+        for(let i=1;i<=showPage;i++){
+            str+=`<li data-page="${i}" class="">${i}</li>`
+        }
+        Page.innerHTML=`${pre}<li data-page="pre10"><<</li>${str}<li data-page="nxt10">>></li>${nxt}`
+        activePage()
+    }else if(pageTotal<=showPage && pageTotal>1){
+        for(let i=1;i<=pageTotal;i++){
+            str+=`<li data-page="${i}" class="">${i}</li>`
+        }
+        Page.innerHTML=`${pre}${str}${nxt}`
+        activePage()
+    }else if(pageTotal=1){
+        Page.innerHTML=''
+    }
+    
+}
+
+// 轉跳上下10頁
+function renderTenPage(e){
+    let nodeName=e.target.nodeName;
+    let datasetPage= e.target.dataset.page
+    let DataLen =temporaryData.length
+    let pageTotal =Math.ceil(DataLen/perPage)
+    let crntPgRnDn=Math.floor(currentPage/10)*10
+    if(nodeName=='LI'){
+        let str=''
+        let pre='<li class="previous" data-page="pre">Previous</li>'
+        let nxt='<li class="next" data-page="nxt">Next</li>'
+        if(datasetPage=='pre'){
+            for(let i=(currentPage-showPage);i<=(currentPage-1);i++){
+                 str+=`<li data-page="${i}" class="">${i}</li>`
+            }
+        }else if(datasetPage=='nxt'){
+            if(currentPage<(Math.floor(pageTotal/10)*10)){
+                console.log('10page')
+                for(let i=currentPage+1;i<=currentPage+showPage;i++){
+                    str+=`<li data-page="${i}" class="">${i}</li>`
+                }
+            }else{
+                console.log('31-33')
+            }
+        }else if(datasetPage=='pre10' && currentPage>showPage){
+            for(let i=(crntPgRnDn-9);i<=crntPgRnDn;i++){
+                str+=`<li data-page="${i}" class="">${i}</li>`
+            }
+            currentPage=Math.floor((currentPage-1)/10)*10
+        }else if(datasetPage=='nxt10'){
+            console.log('10page')
+            if(currentPage>(Math.floor(pageTotal/10)*10)-showPage){
+                console.log('30-33')
+                for(let i=Math.floor(pageTotal/10)*10+1;i<=pageTotal;i++){
+                    str+=`<li data-page="${i}" class="">${i}</li>`
+                }
+            }else{
+                console.log('10page')
+                for(let i=Math.floor((currentPage-1)/10)*10+11;i<=Math.floor((currentPage-1)/10)*10+20;i++){
+                    str+=`<li data-page="${i}" class="">${i}</li>`
+                }
+            }
+            currentPage=Math.floor((currentPage-1)/10)*10+11
+        }else{
+            return
+        }
+        Page.innerHTML=`${pre}<li data-page="pre10"><<</li>${str}<li data-page="nxt10">>></li>${nxt}`
+    }
+}
+
+//從temporaryData抓16筆資料push到currentPageData
+function displayData(){
+    currentPageData.splice(0,100)
+    // console.log(currentPage)
+    // console.log(currentPageData)
+    let minData =(currentPage-1)*perPage  
+    let maxData =currentPage*perPage-1  /*每頁的最小筆和最大筆資料，EX:第2頁為第11~20筆。因為第一筆是0所以都-1*/
+    let DataLen =temporaryData.length
+    let pageTotal =Math.ceil(DataLen/perPage)
+    //因為最後一頁沒有滿16筆資料，所以currentPageData後面的資料都是undefined，renderList()沒辦法辨識
+    //所以假設currentPage=pageTotal，i的最大值要是temporaryData.length
+    if(currentPage==pageTotal){
+        for(let i=minData;i<DataLen;i++){
+            currentPageData.push(temporaryData[i])
+        }
+    }else{
+        for(let i=minData;i<=maxData;i++){
+            currentPageData.push(temporaryData[i])
+        }
+    }
+    // console.log(currentPageData)
+}
+
+//點擊頁數，一律從temporaryData抓當前頁面的筆數push到currtentPageData[]
+//再renderList(currtentPageData)
+//所以allData是原始資料不能被刪，在一開始就把allData全部push到temporaryData(29)
+function changePage(e){
+    let activeLI=document.querySelector(`[data-page="${currentPage}"]`)
+    activeLI.classList.remove('active')
+    let nodeName=e.target.nodeName;
+    let datasetPage= e.target.dataset.page
+    let DataLen =temporaryData.length
+    let pageTotal =Math.ceil(DataLen/perPage)
+    if(nodeName=='LI'){
+        let pre='<li class="previous" data-page="pre">Previous</li>'
+        let nxt='<li class="next" data-page="nxt">Next</li>'
+        // console.log(currentPage)
+        //點pre或nxt，currentPae+1-1
+        if(Number(datasetPage)>0){
+            currentPage =parseInt(datasetPage)
+            goTop()
+        }else if(datasetPage=='pre'){
+            if(currentPage==1){
+                activePage()
+                return
+            }else if((currentPage%10)===1){
+                renderTenPage(e)
+            }
+            currentPage = currentPage-1
+            goTop()
+        }else if(datasetPage=='nxt'){
+            if(currentPage==pageTotal){
+                activePage()
+                return
+            }else if((currentPage%10)===0){
+                renderTenPage(e)
+            }
+            currentPage=currentPage+1
+            goTop()
+        }else if(datasetPage=='pre10'){
+            renderTenPage(e)
+            
+        }else if(datasetPage=='nxt10'){
+            if(currentPage==pageTotal){
+                activePage()
+                return
+            }else{
+                renderTenPage(e)
+            }
+        }
+    }
+    displayData()
+    renderList(currentPageData)
+    activePage()
+}
+//目前是哪一頁，就在那一頁嵌入class=".active"
+function activePage(){
+    let activeLI=document.querySelector(`[data-page="${currentPage}"]`)
+    activeLI.classList.add('active')
+}
+//點擊頁面箭頭看更多頁面數
+
 function btnShow(){
     if(window.scrollY>=980){
         btn.setAttribute('style','opacity:1;transform:translateX(0px)')
@@ -152,7 +331,7 @@ function btnShow(){
 }
 function goTop(){
     window.scrollTo({
-        top:0,
+        top:300,
         behavior:"smooth"
     });
 }
