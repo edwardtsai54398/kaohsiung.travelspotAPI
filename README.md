@@ -64,9 +64,9 @@ flowchart TB
 在"first commit"時，callHotspot() 、 changeSelector() 和 renderList() 函式，裡面都同樣有這段程式碼
 ```js
 let str=``
-for(let i=0;i<d=data.length;i++){
+for(let i=0;i<=data.length;i++){
     if(dataZone==data[i].Zone){
-    str+=`<li class="spots">
+        str+=`<li class="spots">
                 <div class="img" style="background-image:url(${data.Picture1})">
                     <div class="wrap">
                         <h5 class="spotName">${data.Name}</h5>
@@ -93,19 +93,30 @@ for(let i=0;i<d=data.length;i++){
 }
 ```
 後來經高人指點，把這段程式碼抽離出來成一個函式 renderList()，再讓 callHotspot() 和 changeSelector() 裡面去執行，會比較簡潔。<br>
-但 callHotspot() 和 changeSelector() 都要在for迴圈內判斷每一筆資料是否符合行政區，再加入到str，在這裡卡很久。<br>
-直到某一天想出一個辦法：宣告一個全域變數 temporaryData=[]，先讓 callHotspot() 和 changeSelector() 跑for迴圈篩出的資料 push 到 temporaryData，
-再讓 renderList() 把temporaryData 的資料去全部渲染到頁面。(這時還沒有做分頁系統，不是渲染currentPageData)
+但 callHotspot() 和 changeSelector() 都要在 for 迴圈內判斷每一筆資料是否符合行政區，再加入到str，在這裡卡很久。<br>
+直到某一天想出一個辦法：宣告一個全域變數 temporaryData=[]，先讓 callHotspot() 和 changeSelector() 跑 for 迴圈篩出的資料 push 到 temporaryData，
+再讓 renderList() 把temporaryData 的資料全部渲染到頁面。(這時還沒有做分頁系統，不是渲染currentPageData)<br>
+
 2. ### 製作分頁功能
-+ 2-1 在寫分頁功能程式碼時，renderPageList()、changePage() 和 renderTenPage() 裡的區域變數有很許多是相同的。<br>
++ 2-1   renderPageList()、changePage() 和 renderTenPage() 裡的區域變數有很許多是相同的。<br>
 我觀察其他也有做分頁功能的code，是把跟分頁有關的函式都包在一個函式 pagenation()，並在裡面宣告共同會用到的變數。<br>
-當我也嘗試這麼做時，發現沒辦法183genation() 
-3.- ### 未來可以修正的項目
-+ 3-1目前分頁功能的程式碼的if判斷有點太囉嗦太冗長，很難一口氣看到懂。<br>
+當我也嘗試這麼做時，發現沒辦法把 pagenation() 裡的函式單獨抓出來執行。不確定是為什麼(我之後再請教高人)，所以最後我還是把它們分出三個函式。
++ 2-2   renderPageList() 和 renderTenPage() 原本想把共同的程式碼
+```js
+for(let i=;i<=;i++){
+    str+=`<li data-page="${i}" class="">${i}</li>`
+}
+Page.innerHTML=`${pre}${str}${nxt}`
+```
+放在其中一個函式，讓程式碼看起來更簡潔。但因為要判斷if的狀況實在是太多了！每一種情況的 for 迴圈的頭尾(i)都不一樣(因為頁數會變)，最後str+=這段還是會一直重複被寫。
+與其放在其中一個函式去 for 迴圈，讓這個函式變得超冗長，不如最後還是分兩個函式，專注在各自需要用到的情境就好。但也許之後會學到任何可以突破這個問題的技術。
+
+3. ### 未來可以修正的項目
++ 3-1   目前分頁功能的程式碼的if判斷有點太囉嗦太冗長，很難一口氣看得懂。<br>
     之後若有時間改進，會在依照自己做的程式撰寫邏輯再寫得更精簡。
-+ 3-2由於分頁功能設計是最多呈現前10頁(資料超過10頁的話)。但若客戶或UI設計希望可以呈現7個頁數或其他頁數，在if判斷何時 pagelist 要渲染成下 n 頁，
-就會變得不好修改。<br>以目前的程式碼邏輯，是以10的倍數的餘數去判斷是否跳下10頁
-+ 3-3
++ 3-2   由於分頁功能設計是最多呈現前10頁(資料超過10頁的話)。但若客戶或UI設計希望可以呈現7個頁數或其他頁數，在if判斷何時 pagelist 要渲染成下 n 頁，
+就會變得不好修改。<br>以目前的程式碼邏輯，是以10的倍數的餘數去判斷是否跳下10頁。
++ 3-3   分頁功能也可以嘗試做成：按到偏後面的頁數時，例如9頁中的第7頁，讓"7"這個數字和 active 樣式移到整個 pagelist 的中間，變成：3..."7"...11。
 
 ## 參考資料
 排版設計來自 六角學院線上課程
